@@ -2,7 +2,7 @@
 
 Este repositório contém **dois projetos integrados**:
 - 🛠️ **Back-End**: API de e-commerce em **Spring Boot** (pasta `back-end/`)
-- 📲 **Front-End Mobile**: aplicativo Android em **Kotlin + Jetpack Compose** (pasta `front/`)
+- 📲 **Front-End Mobile**: aplicativo Android em **Kotlin + Jetpack Compose** (pasta `front-end/`)
 
 ---
 
@@ -10,7 +10,7 @@ Este repositório contém **dois projetos integrados**:
 ```
 /
 ├── back-end/   → Back-end em Spring Boot
-└── front/      → Front-end em Android (Kotlin/Compose)
+└── front-end/      → Front-end em Android (Kotlin/Compose)
 ```
 
 ---
@@ -18,7 +18,7 @@ Este repositório contém **dois projetos integrados**:
 ## ⚙️ Como abrir os projetos
 
 ### 🔹 Para trabalhar no **Front-End (Mobile)**
-- Abra a pasta `front/` diretamente no **Android Studio**.
+- Abra a pasta `front-end/` diretamente no **Android Studio**.
 - O Android Studio só entende bem o projeto Android (Gradle).
 - Aqui você vai encontrar as telas (Jetpack Compose), ViewModels, Repositórios e integração com a API.
 
@@ -62,7 +62,7 @@ Acesse: [http://localhost:8080/api/v1/health](http://localhost:8080/api/v1/healt
 
 ### Front-End
 ```bash
-cd front
+cd front-end
 # Abra no Android Studio
 # Escolha o flavor:
 # - devDebug → conecta no back local (http://10.0.2.2:8080/api/v1/)
@@ -82,4 +82,5 @@ cd front
 📌 **Resumo:**  
 - Para **front-end mobile**: abra no **Android Studio** → apenas `front/`.  
 - Para **back-end**: abra a **raiz** no IntelliJ/VS Code → vê back e front juntos.  
+
 
