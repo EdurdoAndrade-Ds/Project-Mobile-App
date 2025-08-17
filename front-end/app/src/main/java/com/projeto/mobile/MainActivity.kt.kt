@@ -1,0 +1,13 @@
+package com.projeto.mobile
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import com.projeto.mobile.ui.AppNav
+
+class `MainActivity.kt` : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent { AppNav() }
+    }
+}
