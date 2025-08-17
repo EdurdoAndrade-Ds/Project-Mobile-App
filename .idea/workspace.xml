@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df1885ab-d3f6-4480-a4a6-94ec64d83a9e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +16,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/back-end" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -24,12 +24,12 @@
     &quot;assignee&quot;: &quot;EdurdoAndrade-Ds&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/EdurdoAndrade-Ds/Project-Ecommerce-api.git&quot;,
-    &quot;accountId&quot;: &quot;08df16ce-8286-4683-8c9c-80b659c775c7&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/EdurdoAndrade-Ds/Project-Mobile-App.git",
+    "accountId": "08df16ce-8286-4683-8c9c-80b659c775c7"
   }
-}</component>
+}]]></component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\Tools\php\NTS\php.exe" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -44,7 +44,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Site Producao/mobile-app",
     "node.js.detected.package.eslint": "true",
@@ -78,7 +78,7 @@
       <option name="presentableId" value="Default" />
       <updated>1755394012632</updated>
       <workItem from="1755394013598" duration="360000" />
-      <workItem from="1755394604113" duration="882000" />
+      <workItem from="1755394604113" duration="1789000" />
     </task>
     <servers />
   </component>
