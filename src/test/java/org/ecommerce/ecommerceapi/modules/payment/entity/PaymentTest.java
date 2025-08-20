@@ -1,6 +1,6 @@
 package org.ecommerce.ecommerceapi.modules.payment.entity;
 
-import org.ecommerce.ecommerceapi.modules.pedido.entity.Pedido;
+import org.ecommerce.ecommerceapi.modules.order.entity.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,42 +12,42 @@ import static org.junit.jupiter.api.Assertions.*;
 class PaymentTest {
 
     private Payment payment;
-    private Pedido pedido;
+    private Order order;
     private LocalDateTime now;
 
     @BeforeEach
     void setUp() {
-        pedido = new Pedido();
-        pedido.setId(1L);
+        order = new Order();
+        order.setId(1L);
 
         payment = new Payment();
         payment.setId(1L);
-        payment.setPedido(pedido);
-        payment.setValor(BigDecimal.TEN);
+        payment.setOrder(order);
+        payment.setPrice(BigDecimal.TEN);
         now = LocalDateTime.now();
-        payment.setDataPagamento(now);
+        payment.setDatePayment(now);
     }
 
     @Test
     void testGettersAndSetters() {
         assertEquals(1L, payment.getId());
-        assertEquals(pedido, payment.getPedido());
-        assertEquals(BigDecimal.TEN, payment.getValor());
-        assertEquals(now, payment.getDataPagamento());
+        assertEquals(order, payment.getOrder());
+        assertEquals(BigDecimal.TEN, payment.getPrice());
+        assertEquals(now, payment.getDatePayment());
     }
 
     @Test
     void testEqualsAndHashCode() {
         Payment other = new Payment();
         other.setId(1L);
-        other.setPedido(pedido);
-        other.setValor(BigDecimal.TEN);
-        other.setDataPagamento(now);
+        other.setOrder(order);
+        other.setPrice(BigDecimal.TEN);
+        other.setDatePayment(now);
 
         assertEquals(payment, other);
         assertEquals(payment.hashCode(), other.hashCode());
 
-        other.setValor(BigDecimal.ONE);
+        other.setPrice(BigDecimal.ONE);
         assertNotEquals(payment, other);
     }
 

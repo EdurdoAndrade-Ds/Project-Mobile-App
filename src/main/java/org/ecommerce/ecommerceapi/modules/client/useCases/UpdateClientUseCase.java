@@ -2,18 +2,18 @@ package org.ecommerce.ecommerceapi.modules.client.useCases;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.ecommerce.ecommerceapi.exceptions.ClientConflictException;
+import org.ecommerce.ecommerceapi.exceptions.ClientNotFoundException;
 import org.ecommerce.ecommerceapi.modules.client.dto.UpdateClientDTO;
 import org.ecommerce.ecommerceapi.modules.client.entities.ClientEntity;
 import org.ecommerce.ecommerceapi.modules.client.mapper.ClientMapper;
 import org.ecommerce.ecommerceapi.modules.client.repositories.ClientRepository;
 import org.springframework.stereotype.Service;
-import jakarta.persistence.EntityNotFoundException;
 
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UpdateClientUseCase {
 
 
@@ -22,7 +22,8 @@ public class UpdateClientUseCase {
 
     public ClientEntity execute(Long clienteId, UpdateClientDTO upDto) {
         ClientEntity client = this.clientRepository.findById(clienteId)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+                .orElseThrow(() -> new ClientNotFoundException("Cliente nao encontrado"));
+
 
         String newUsername = upDto.getUsername() != null ? upDto.getUsername() : client.getUsername();
         String newEmail = upDto.getEmail() != null ? upDto.getEmail() : client.getEmail();
@@ -32,12 +33,10 @@ public class UpdateClientUseCase {
         if (changedUser || changedMail) {
             boolean conflict = clientRepository
                     .existsByUsernameOrEmailAndIdNot(newUsername, newEmail, clienteId);
-            if (conflict) throw new RuntimeException("Cliente ja existe!");
+            if (conflict) throw new ClientConflictException();
         }
 
         clientMapper.updateFromDto(upDto, client);
-
-
         return this.clientRepository.save(client);
     }
 }

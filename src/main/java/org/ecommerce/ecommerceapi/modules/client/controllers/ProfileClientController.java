@@ -1,9 +1,11 @@
 package org.ecommerce.ecommerceapi.modules.client.controllers;
 
+import org.ecommerce.ecommerceapi.exceptions.ClientUnauthorizedException;
 import org.ecommerce.ecommerceapi.modules.client.useCases.ProfileClientUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.function.LongPredicate;
 
 @RestController
 @RequestMapping("/cliente")
@@ -62,12 +66,17 @@ public class ProfileClientController {
             @ApiResponse(responseCode = "403", description = "Acesso negado")
     })
     public ResponseEntity<Object> profile(HttpServletRequest request) {
-        try {
-            var clienteId = Long.parseLong(request.getAttribute("cliente_id").toString());
-            var result = this.profileClientUseCase.execute(clienteId);
-            return ResponseEntity.ok().body(result);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+            Object idAttr = request.getAttribute("cliente_id");
+            if(idAttr == null) {
+                throw new ClientUnauthorizedException("Token invalido ou ausente");
+            }
+
+            long clienteId = Long.parseLong(idAttr.toString());
+            return ResponseEntity.ok(profileClientUseCase.execute(clienteId));
+    }
+
+    @ExceptionHandler(ClientUnauthorizedException.class)
+    public ResponseEntity<Object> handleClientUnauthorized(ClientUnauthorizedException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 }

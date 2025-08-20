@@ -1,26 +1,35 @@
 package org.ecommerce.ecommerceapi.modules.payment.dto;
 
-import java.math.BigDecimal;
+import lombok.*;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PaymentRequestDTO {
     private Long pedidoId;
-    private BigDecimal valor;
+    private BigDecimal price;
 
-    public Long getPedidoId() {
-        return pedidoId;
+    public boolean canEqual(Object other) {
+        return other instanceof PaymentRequestDTO;
     }
 
-    public void setPedidoId(Long pedidoId) {
-        this.pedidoId = pedidoId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PaymentRequestDTO that = (PaymentRequestDTO) o;
+        if (!that.canEqual(this)) return false;
+        return Objects.equals(pedidoId, that.pedidoId) && Objects.equals(price, that.price);
     }
 
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
+    @Override
+    public int hashCode() {
+        return Objects.hash(pedidoId, price);
     }
 }
-
-

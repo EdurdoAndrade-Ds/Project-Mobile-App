@@ -15,22 +15,20 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-
 @Entity
 @Table(name = "client")
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+
 public class ClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O campo [nome] é obrigatório")
+    @NotBlank(message = "O campo [name] é obrigatório")
     private String name;
 
     @NotBlank(message = "O campo [username] é obrigatório")
