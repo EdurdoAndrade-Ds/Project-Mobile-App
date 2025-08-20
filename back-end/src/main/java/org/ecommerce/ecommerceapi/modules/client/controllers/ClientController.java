@@ -1,5 +1,6 @@
 package org.ecommerce.ecommerceapi.modules.client.controllers;
 
+import org.ecommerce.ecommerceapi.exceptions.ClientNotFoundException;
 import org.ecommerce.ecommerceapi.modules.client.dto.CreateClientDTO;
 import org.ecommerce.ecommerceapi.modules.client.dto.DeleteClientDTO;
 import org.ecommerce.ecommerceapi.modules.client.dto.UpdateClientDTO;
@@ -12,12 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,7 +27,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.persistence.EntityNotFoundException;
+
 
 @RestController
 @RequestMapping("/client")
@@ -34,11 +35,11 @@ import jakarta.persistence.EntityNotFoundException;
 public class ClientController {
 
     @Autowired
-    private CreateClientUseCase createClientUseCase;
+    private CreateClientUseCase createClienteUseCase;
     @Autowired
-    private DeleteClientUseCase deleteClientUseCase;
+    private DeleteClientUseCase deleteClienteUseCase;
     @Autowired
-    private UpdateClientUseCase updateClientUseCase;
+    private UpdateClientUseCase updateClienteUseCase;
 
     @PostMapping("/")
     @Operation(
@@ -125,7 +126,7 @@ public class ClientController {
                     .cep(createClientDTO.getCep())
                     .build();
 
-            var result = this.createClientUseCase.execute(clienteEntity);
+            var result = this.createClienteUseCase.execute(clienteEntity);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -151,7 +152,7 @@ public class ClientController {
     ) {
         try {
             var clienteId = Long.parseLong(authentication.getName());
-            this.deleteClientUseCase.execute(clienteId, deleteClientDTO.getPassword());
+            this.deleteClienteUseCase.execute(clienteId, deleteClientDTO.getPassword());
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -198,15 +199,14 @@ public class ClientController {
             @Valid @RequestBody UpdateClientDTO updateClientDTO,
             Authentication authentication
     ) {
-        try {
-            var clienteId = Long.parseLong(authentication.getName());
-            var updatedCliente = this.updateClientUseCase.execute(clienteId, updateClientDTO);
-            return ResponseEntity.ok().body(updatedCliente);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        Long clienteId = Long.parseLong(authentication.getName());
+
+        var updatedClient = updateClienteUseCase.execute(clienteId, updateClientDTO);
+        return ResponseEntity.ok(updatedClient);
+    }
+
+    @ExceptionHandler(ClientNotFoundException.class)
+    public ResponseEntity<Object> handleClientNotFound(ClientNotFoundException ex) {
+        return ResponseEntity.status(404).body(ex.getMessage());
     }
 }
-

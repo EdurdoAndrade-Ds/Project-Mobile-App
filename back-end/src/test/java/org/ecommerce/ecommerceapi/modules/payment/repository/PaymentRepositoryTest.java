@@ -2,9 +2,9 @@ package org.ecommerce.ecommerceapi.modules.payment.repository;
 
 import org.ecommerce.ecommerceapi.modules.client.entities.ClientEntity;
 import org.ecommerce.ecommerceapi.modules.client.repositories.ClientRepository;
+import org.ecommerce.ecommerceapi.modules.order.entity.Order;
 import org.ecommerce.ecommerceapi.modules.payment.entity.Payment;
-import org.ecommerce.ecommerceapi.modules.pedido.entity.Pedido;
-import org.ecommerce.ecommerceapi.modules.pedido.repository.PedidoRepository;
+import org.ecommerce.ecommerceapi.modules.order.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ class PaymentRepositoryTest {
     private PaymentRepository paymentRepository;
 
     @Autowired
-    private PedidoRepository pedidoRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -31,7 +31,7 @@ class PaymentRepositoryTest {
     @BeforeEach
     void setUp() {
         paymentRepository.deleteAll();
-        pedidoRepository.deleteAll();
+        orderRepository.deleteAll();
         clientRepository.deleteAll();
     }
 
@@ -45,21 +45,21 @@ class PaymentRepositoryTest {
         cliente.setActive(true);
         cliente = clientRepository.save(cliente);
 
-        Pedido pedido = new Pedido();
-        pedido.setCliente(cliente);
-        pedido.setCancelado(false);
-        pedido.setTotal(BigDecimal.valueOf(100));
-        pedido.setDateCreate(LocalDateTime.now());
-        pedido = pedidoRepository.save(pedido);
+        Order order = new Order();
+        order.setCliente(cliente);
+        order.setCancelado(false);
+        order.setTotal(BigDecimal.valueOf(100));
+        order.setDateCreate(LocalDateTime.now());
+        order = orderRepository.save(order);
 
         Payment payment = new Payment();
-        payment.setPedido(pedido);
-        payment.setValor(BigDecimal.valueOf(100));
-        payment.setDataPagamento(LocalDateTime.now());
+        payment.setOrder(order);
+        payment.setPrice(BigDecimal.valueOf(100));
+        payment.setDatePayment(LocalDateTime.now());
         paymentRepository.save(payment);
 
-        List<Payment> list = paymentRepository.findByPedidoId(pedido.getId());
+        List<Payment> list = paymentRepository.findByOrderId(order.getId());
         assertEquals(1, list.size());
-        assertEquals(BigDecimal.valueOf(100), list.get(0).getValor());
+        assertEquals(BigDecimal.valueOf(100), list.get(0).getPrice());
     }
 }

@@ -2,14 +2,18 @@ package org.ecommerce.ecommerceapi.modules.payment.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.ecommerce.ecommerceapi.modules.pedido.entity.Pedido;
+import lombok.Getter;
+import lombok.Setter;
+import org.ecommerce.ecommerceapi.modules.order.entity.Order;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "pagamento")
+@Getter
+@Setter
+@Table(name = "payments")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,33 +21,15 @@ public class Payment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id", nullable = false)
-    private Pedido pedido;
+    private Order order;
 
     @Column(nullable = false)
-    private BigDecimal valor;
+    private BigDecimal price;
 
     @Column(name = "data_pagamento", nullable = false)
-    private LocalDateTime dataPagamento;
+    private LocalDateTime datePayment;
 
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public void setDataPagamento(LocalDateTime now) {
-        this.dataPagamento = now;
-    }
-
-    public Pedido getPedido() {
-        return pedido;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     
 }
